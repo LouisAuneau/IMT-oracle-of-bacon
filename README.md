@@ -46,6 +46,11 @@ Les données sont des données qui proviennent de imdb, le dataset est disponibl
 ## Votre mission
 Le site a été bouchonné (cf `TODO`), vous devez effectuer les tâches suivantes :
 * Importer les données dans Neo4J à l'aide de l'outil d'import : [`ìmport-tool`](http://neo4j.com/docs/operations-manual/current/tutorial/import-tool/).
+
+```
+neo4j-community-3.5.3/bin/neo4j-admin import --nodes:Movies data/imdb-data/movies.csv --nodes:Actors data/imdb-data/actors.csv --relationships data/imdb-data/roles.csv
+```
+
 * Implémenter l'Oracle de Bacon à l'aide de Neo4J dans la méthode `com.serli.oracle.of.bacon.repository.Neo4JRepository#getConnectionsToKevinBacon`
 * Implémenter la gestion du last 10 search à l'aide de Redis dans la méthode `com.serli.oracle.of.bacon.repository.RedisRepository#getLastTenSearches`
 * Importer les données à l'iade de ElasticSearch dans `com.serli.oracle.of.bacon.loader.elasticsearch.CompletionLoader` (les liens suivants pourront vous aider : [search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html), [mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) et [suggest](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html))
