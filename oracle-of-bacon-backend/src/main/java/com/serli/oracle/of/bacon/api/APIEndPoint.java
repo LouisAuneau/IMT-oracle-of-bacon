@@ -42,11 +42,7 @@ public class APIEndPoint {
 
     @Get("suggest?q=:searchQuery")
     public List<String> getActorSuggestion(String searchQuery) throws IOException {
-        return Arrays.asList("Niro, Chel",
-                "Senanayake, Niro",
-                "Niro, Juan Carlos",
-                "de la Rua, Niro",
-                "Niro, Simão");
+        return this.elasticSearchRepository.getActorsSuggests(searchQuery);
     }
 
     @Get("last-searches")
@@ -56,7 +52,7 @@ public class APIEndPoint {
 
     @Get("actor?name=:actorName")
     public String getActorByName(String actorName) {
-    	MongoDbRepository mongodb = new MongoDbRepository();
+        MongoDbRepository mongodb = new MongoDbRepository();
         return TypeConvert.toJson(mongodb.getActorByName(actorName).get());
     }
 }

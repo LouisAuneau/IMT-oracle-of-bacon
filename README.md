@@ -53,11 +53,32 @@ neo4j-community-3.5.3/bin/neo4j-admin import --nodes:Movies data/imdb-data/movie
 
 * Implémenter l'Oracle de Bacon à l'aide de Neo4J dans la méthode `com.serli.oracle.of.bacon.repository.Neo4JRepository#getConnectionsToKevinBacon`
 
-
+La requête est: `MATCH (source:Actors{name:'Bacon, Kevin (I)'}), (destination:Actors{name:'{NOM_ACTEUR_RECHERCHÉ}'}), path = shortestPath((source)-[:PLAYED_IN*]-(destination)) RETURN path`
 
 * Implémenter la gestion du last 10 search à l'aide de Redis dans la méthode `com.serli.oracle.of.bacon.repository.RedisRepository#getLastTenSearches`
-* Importer les données à l'iade de ElasticSearch dans `com.serli.oracle.of.bacon.loader.elasticsearch.CompletionLoader` (les liens suivants pourront vous aider : [search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html), [mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) et [suggest](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html))
+
+* Importer les données à l'aide de ElasticSearch dans `com.serli.oracle.of.bacon.loader.elasticsearch.CompletionLoader` (les liens suivants pourront vous aider : [search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html), [mapping]
+(https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) et [suggest](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html))
+
+Pour définir le mapping dans le code, nous avons dû mettre à jour la dépendance gradle vers elasticsearch 6.6.0. On réalise ensuite un bulk avec des paquets de 500 acteurs.
+
 * Implémenter la suggestion sur le nom des acteurs dans `com.serli.oracle.of.bacon.repository.ElasticSearchRepository#getActorsSuggests`
+
+```
+GET localhost:9200/actors/actor/_search
+{
+	"suggest": {
+		"actors": {
+			"prefix": "Wright",
+			"completion" : { 
+                "field" : "suggest" 
+            }
+		}
+	}
+}
+```
+Le résultat est dans `suggest > actors[0] > options`.
+
 * Implémenter la recherche des acteurs par nom à l'aide de MongoDB dans `com.serli.oracle.of.bacon.repository.MongoDbRepository#getActorByName`
 
 L'évaluation de votre travail sera effectuée selon les critères suivants :
