@@ -12,7 +12,11 @@ public class RedisRepository {
     }
 
     public List<String> getLastTenSearches() {
-        // TODO implement last 10 searchs
-        return null;
+        return jedis.lrange("searches", 0, 9);
+    }
+    
+    public void addInDb(String actorName)
+    {
+    	jedis.lpush("searches", actorName);
     }
 }

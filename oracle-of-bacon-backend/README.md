@@ -11,3 +11,5 @@ To build :
 ```
 
 To Run, execute class *com.serli.oracle.of.bacon.Application*.
+
+Pour la question MongoDB il faut run le script "import_actors.js" dans le dossier mongo
